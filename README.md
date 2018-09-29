@@ -1,6 +1,6 @@
 # 这也能算一个 blog 系统？！
 
-[预览 https://frankfang.github.io/wtf-blog/](https://frankfang.github.io/wtf-blog/)
+[预览 https://RyanLee0129.github.io/wtf-blog/](https://frankfang.github.io/wtf-blog/)
 
 ## 使用方法：
 
@@ -9,7 +9,7 @@
 	1. 滚动屏幕到「GitHub Pages」
 	2. 在 Source 那里选中 master branch
 	3. Save
-3. 看到「Your site is published at https://frankfang.github.io/wtf-blog/」
+3. 看到「Your site is published at https://RyanLee0129.github.io/wtf-blog/」
 4. 好了，你的博客系统设置完毕了
 
 ## 如何写博客
