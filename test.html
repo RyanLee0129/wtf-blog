@@ -65,6 +65,8 @@ var imgUrl = getQueryString("image");
 var folderUrl = getQueryString("folder")
 
 if (imgUrl !== null) {
+	
+	console.log("1")
 	if (imgUrl.indexOf('.jpg') !== -1 || imgUrl.indexOf('.png') !== -1) {
 		pannellum.viewer('panorama', {
 			"type": "equirectangular",
@@ -90,6 +92,7 @@ if (imgUrl !== null) {
 	};
 } 
 else if (folderUrl !== null) {
+	console.log("2")
 	pannellum.viewer('panorama', {
 		"type": "multires",
     "multiRes": {
