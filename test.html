@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimension5 | 全景图</title>
+    <link rel="stylesheet" href="pannellum.css"/>
+    <script type="text/javascript" src="pannellum.js"></script>
+    <style>
+	* {
+		margin: 0;
+	}
+	html, body {
+		height: 100%;
+	}
+	.panoramaClass{
+		position:relative;
+		width:100%;
+		height:100%;
+		transform-style:preserve-3d;
+		-moz-transform-style:preserve-3d;
+		-webkit-transform-style:preserve-3d;
+		transform-origin:center center -50px;
+		-moz-transform-origin:center center -50px;
+		-webkit-transform-origin:center center -50px;
+	}
+    #panorama {
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+</head>
+<body>
+
+<div id="panorama" class="panoramaClass"></div>
+<script>
+
+	var space = document.querySelectorAll('.panoramaClass');
+	if(window.DeviceOrientationEvent) {
+
+	  window.addEventListener('deviceorientation', function(event) {
+      	var alpha = event.alpha,
+      	beta = event.beta,
+		gamma = event.gamma;
+      
+        space[0].style.webkitTransform = 'rotateX('+beta+'deg) rotateY('+gamma+'deg) rotateZ('+alpha+'deg)';
+        space[0].style.transform = 'rotateX('+beta+'deg) rotateY('+gamma+'deg) rotateZ('+alpha+'deg)';
+        space[0].style.mozTransform = 'rotateX('+beta+'deg) rotateY('+gamma+'deg) rotateZ('+alpha+'deg)';
+
+	      }, false);
+	}else{
+	  document.querySelector('body').innerHTML = '你的浏览器不支持陀螺仪';
+	}
+
+function getQueryString(name) {
+	var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) {
+		return unescape(r[2]);
+	}
+	return null;
+}
+	
+var imgUrl = getQueryString("image");
+var folderUrl = getQueryString("folder")
+
+if (imgUrl !== null) {
+	if (imgUrl.indexOf('.jpg') !== -1 || imgUrl.indexOf('.png') !== -1) {
+		pannellum.viewer('panorama', {
+			"type": "equirectangular",
+			"panorama": imgUrl,
+			"autoLoad": true,
+			"hfov": 50
+		})
+	} 
+	else {
+		pannellum.viewer('panorama', {
+			"type": "cubemap",
+			"autoLoad": true,
+			"cubeMap": [
+				imgUrl + "/0.jpg",
+				imgUrl + "/1.jpg",
+				imgUrl + "/2.jpg",
+				imgUrl + "/3.jpg",
+				imgUrl + "/4.jpg",
+				imgUrl + "/5.jpg"
+			],
+			"hfov": 50
+		})
+	};
+} 
+else if (folderUrl !== null) {
+	pannellum.viewer('panorama', {
+		"type": "multires",
+    "multiRes": {
+			"path": folderUrl + "/%l/%s%y_%x",
+			"fallbackPath": "/fallback/%s",
+			"extension": "jpg",
+			"tileResolution": 512,
+			"maxLevel": 4,
+			"cubeResolution": 2048
+    },
+		"autoLoad": true,
+		"hfov": 50
+	})
+}
+
+</script>
+
+</body>
+</html>
